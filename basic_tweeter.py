@@ -26,6 +26,22 @@ def main():
     # a dict of covid data with "MM/-D/YY" as keys
     covid_data = data.get_data()
     today = date.today().strftime("%-m/%-d/%y")
+    # get inner keys
+    inner_keys = list(covid_data.values())[0].keys()
+
+    # x-axis is the outer keys
+    x_axis_values = list(map(str, covid_data.keys()))
+
+    # loop through inner_keys
+    for x in inner_keys:
+        # create a list of values for inner key
+        y_axis_values = [v[x] for v in covid_data.values()]
+
+    # plot each inner key
+    plt.plot(x_axis_values, y_axis_values, label=x)
+
+    plt.legend()
+    
     if today in covid_data:
         new_cases_today = covid_data[today]['new_cases']
         known_cases = covid_data[today]['known_cases']
